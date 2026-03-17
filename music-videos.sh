@@ -1,12 +1,30 @@
 #!/bin/bash
 
-source .env
+## Directories - be sure to set these before running the script!!
+dir="/path/ to/ tmp/ directory/" # This is where downloads will initially go
+mv_dir="/path/ to/ music/ video/ directory/" # This is where processed music videos will end up
 
 ## Ensure dependencies - Note: will only work on debian based systems with Python3 installed.
-sudo apt-get install pipx curl imagemagick -y
-pipx install yt-dlp
-pipx install ytdl-nfo
+pipx="$(which pipx)"
+imagemagick="$(which imagemagick)"
+yt-dlp="$(which yt-dlp)"
+ytdl-nfo="$(which ytdl-nfo)"
 
+if [[ ! -n $pipx ]]; then
+    sudo apt-get install pipx -y
+fi
+if [ ![ -n $imagemagick ]]; then
+    sudo apt-get install imagemagick -y
+fi
+if [[ ! -n $yt-dlp ]]; then
+    pipx install yt-dlp
+fi
+if [[ ! -n $ytdl-nfo ]]; then
+    pipx install ytdl-nfo
+    source /home/$(whoami)/.local/share/pipx/venvs/ytdl-nfo/bin/activate
+    python -m pip install "setuptools<82"
+    deactivate
+fi
 
 function pause(){
   read -s -n 1 -p "Press any key to continue . . ."
@@ -58,12 +76,11 @@ full_title=$(cat $dir/*-video.info.json | jq -r '.fulltitle')
 parsed=$(echo "$full_title" | sed -E 's/^(.*?) - ([^([]*).*$/\1|\2/')
 artist="${parsed%%|*}"
 title="${parsed#*|}"
-title=$(echo "$title" | sed -E 's/^(.*?) - ([^([]*?)( (ft\.|feat\.).*)?(\(|\[).*/\1|\2/I')
 title=$(echo "$title" | sed -E "s/[[:space:]]+$//; s/ *'[^ ]+$//")
 
 
 ## Sanity checks before renaming/moving
-if [ ! -e "$full_title-video.mkv" ]; then
+if [ ! -e "$dir/$full_title-video.mkv" ]; then
     echo "Video file not found. Exiting"
     exit
 else
@@ -102,15 +119,16 @@ fi
 
 ## Create directories if needed
 if [ ! -d "$dir" ]; then
-    mkdir -p "$dir"
+    mkdir -pv "$dir"
 fi
 if [ ! -d "$mv_dir/$artist" ]; then
-    mkdir -p "$mv_dir/$artist"
-fi    
+    mkdir -pv "$mv_dir/$artist"
+fi
 
 ## Rename files to match title
 mv -v "$dir/$full_title-video.mkv" "$dir/$title-video.mkv"
-mv -v "$dir/$full_title-video.webp" "$dir/$title-video.webp"
+[[ -f "$dir/$full_title-video.webp" ]] && mv -v "$dir/$full_title-video.webp" "$dir/$title-video.webp"
+[[ -f "$dir/$full_title-video.jpg" ]] && mv -v "$dir/$full_title-video.jpg" "$dir/$title-video.jpg"
 mv -v "$dir/$full_title-video.info.json" "$dir/$title-video.info.json"
 
 # pause
@@ -122,8 +140,10 @@ rm -v "$dir/$title-video.info.json"
 # pause
 
 ## Convert thumbnail to jpg
-convert -verbose "$dir/$title-video.webp" "$dir/$title-video.jpg"
-rm -v "$dir/$title-video.webp"
+if [[ -f "$dir/$title-video.webp" ]]; then
+    convert -verbose "$dir/$title-video.webp" "$dir/$title-video.jpg"
+    rm -v "$dir/$title-video.webp"
+fi
 
 # pause
 
