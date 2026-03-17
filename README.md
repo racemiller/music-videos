@@ -20,7 +20,7 @@ This script does the below:
 1. `yt-dlp` [yt-dlp](https://github.com/yt-dlp/yt-dlp)
 2. `nordvpn` for Linux (and an account already set up)
 3. `ytdl-nfo` [ytdl-nfo](https://github.com/owdevel/ytdl-nfo)
-4. `convert`
+4. `imagemagick`
 5. `curl`
 
 ### Instructions

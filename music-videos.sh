@@ -2,6 +2,12 @@
 
 source .env
 
+## Ensure dependencies - Note: will only work on debian based systems with Python3 installed.
+sudo apt-get install pipx curl imagemagick -y
+pipx install yt-dlp
+pipx install ytdl-nfo
+
+
 function pause(){
   read -s -n 1 -p "Press any key to continue . . ."
   echo "" 
