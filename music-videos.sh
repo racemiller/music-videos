@@ -100,6 +100,14 @@ fi
 
 # pause
 
+## Create directories if needed
+if [ ! -d "$dir" ]; then
+    mkdir -p "$dir"
+fi
+if [ ! -d "$mv_dir/$artist" ]; then
+    mkdir -p "$mv_dir/$artist"
+fi    
+
 ## Rename files to match title
 mv -v "$dir/$full_title-video.mkv" "$dir/$title-video.mkv"
 mv -v "$dir/$full_title-video.webp" "$dir/$title-video.webp"
