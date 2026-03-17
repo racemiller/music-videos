@@ -13,7 +13,7 @@ ytdl-nfo="$(which ytdl-nfo)"
 if [[ ! -n $pipx ]]; then
     sudo apt-get install pipx -y
 fi
-if [ ![ -n $imagemagick ]]; then
+if [[ ! -n $imagemagick ]]; then
     sudo apt-get install imagemagick -y
 fi
 if [[ ! -n $yt-dlp ]]; then
