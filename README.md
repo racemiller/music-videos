@@ -17,15 +17,12 @@ This script does the below:
 10. Sets permissions on moved files
 
 ### Requirements
-1. `yt-dlp` [yt-dlp](https://github.com/yt-dlp/yt-dlp) (to download YT videos)
-2. `nordvpn` for Linux (and an account already set up)
-3. `ytdl-nfo` [ytdl-nfo](https://github.com/owdevel/ytdl-nfo) (to convert JSON metadata to NFO file)
-4. `imagemagick` (to convert thumbnails to JPG)
-5. `curl` (should already be installed, to verify VPN connection)
+1. Python3
+2. NordVPN for Linux (and an account already set up and working with CLI)
 
 ### Instructions
 1. Install and configure all required packages (see above)
 2. Clone the repository (`git clone https://github.com/racemiller/music-videos`)
 3. Make the script executable `chmod +x music-videos.sh`
-4. Edit the .env file  `nano .env` and set your directories
+4. Set your directories in the script (`dir` and `mv_dir`) `nano music-videos.sh`
 5. Run the script and follow the instructions `./music-videos.sh`
