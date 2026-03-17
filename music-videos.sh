@@ -40,7 +40,7 @@ fi
 
 function pause(){
   read -s -n 1 -p "Press any key to continue . . ."
-  echo "" 
+  echo ""
 }
 
 ## Feel free to uncomment any 'pause' that you would like to add.
@@ -82,9 +82,10 @@ $url
 nordvpn d
 
 # pause
+json="$(find "$dir" -maxdepth 1 -type f -name "*-video.info.json")"
 
 ## Extract metadata from info.json file
-full_title=$(cat $dir/*-video.info.json | jq -r '.fulltitle')
+full_title=$(cat "$json" | jq -r '.fulltitle')
 parsed=$(echo "$full_title" | sed -E 's/^(.*?) - ([^([]*).*$/\1|\2/')
 artist="${parsed%%|*}"
 title="${parsed#*|}"
@@ -92,11 +93,18 @@ title=$(echo "$title" | sed -E "s/[[:space:]]+$//; s/ *'[^ ]+$//")
 
 
 ## Sanity checks before renaming/moving
-if [ ! -e "$dir/$full_title-video.mkv" ]; then
+base="${json%.info.json}"
+
+if [ ! -f "$base.mkv" ]; then
     echo "Video file not found. Exiting"
     exit
 else
     echo "Found video file"
+    ## Fixes yt-dlp special character handling
+    mv -v "$json" "$full_title-video.info.json"
+    mv -v "$base.mkv" "$full_title-video.mkv"
+    [[ -f "$dir/$base-video.webp" ]] && mv -v "$dir/$base-video.webp" "$dir/$full_title-video.webp"
+    [[ -f "$dir/$base-video.jpg" ]] && mv -v "$dir/$base-video.jpg" "$dir/$full_title-video.jpg"
 fi
 if [ ! -n "$artist" ]; then
     echo "Video artist not found. Exiting"
