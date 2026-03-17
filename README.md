@@ -17,11 +17,11 @@ This script does the below:
 10. Sets permissions on moved files
 
 ### Requirements
-1. `yt-dlp` [yt-dlp](https://github.com/yt-dlp/yt-dlp)
+1. `yt-dlp` [yt-dlp](https://github.com/yt-dlp/yt-dlp) (to download YT videos)
 2. `nordvpn` for Linux (and an account already set up)
-3. `ytdl-nfo` [ytdl-nfo](https://github.com/owdevel/ytdl-nfo)
-4. `imagemagick`
-5. `curl`
+3. `ytdl-nfo` [ytdl-nfo](https://github.com/owdevel/ytdl-nfo) (to convert JSON metadata to NFO file)
+4. `imagemagick` (to convert thumbnails to JPG)
+5. `curl` (should already be installed, to verify VPN connection)
 
 ### Instructions
 1. Install and configure all required packages (see above)
