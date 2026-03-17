@@ -6,9 +6,9 @@ mv_dir="/path/ to/ music/ video/ directory/" # This is where processed music vid
 
 ## Ensure dependencies - Note: will only work on debian based systems with Python3 installed.
 pipx="$(which pipx)"
-imagemagick="$(which imagemagick)"
-yt-dlp="$(which yt-dlp)"
-ytdl-nfo="$(which ytdl-nfo)"
+imagemagick="$(which convert)"
+yt_dlp="$(which yt-dlp)"
+ytdl_nfo="$(which ytdl-nfo)"
 
 if [[ ! -n $pipx ]]; then
     echo "installing pipx"
@@ -22,13 +22,13 @@ if [[ ! -n $imagemagick ]]; then
 else
     echo "imagemagick already installed"
 fi
-if [[ ! -n $yt-dlp ]]; then
+if [[ ! -n $yt_dlp ]]; then
     echo "installing yt-dlp"
     pipx install yt-dlp
 else
     echo "yt-dlp already installed"
 fi
-if [[ ! -n $ytdl-nfo ]]; then
+if [[ ! -n $ytdl_nfo ]]; then
     echo "installing ytdl-nfo"
     pipx install ytdl-nfo
     source /home/$(whoami)/.local/share/pipx/venvs/ytdl-nfo/bin/activate
