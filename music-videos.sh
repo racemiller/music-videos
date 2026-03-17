@@ -11,19 +11,31 @@ yt-dlp="$(which yt-dlp)"
 ytdl-nfo="$(which ytdl-nfo)"
 
 if [[ ! -n $pipx ]]; then
+    echo "installing pipx"
     sudo apt-get install pipx -y
+else
+    echo "pipx already installed"
 fi
 if [[ ! -n $imagemagick ]]; then
+    echo "installing imagemagick"
     sudo apt-get install imagemagick -y
+else
+    echo "imagemagick already installed"
 fi
 if [[ ! -n $yt-dlp ]]; then
+    echo "installing yt-dlp"
     pipx install yt-dlp
+else
+    echo "yt-dlp already installed"
 fi
 if [[ ! -n $ytdl-nfo ]]; then
+    echo "installing ytdl-nfo"
     pipx install ytdl-nfo
     source /home/$(whoami)/.local/share/pipx/venvs/ytdl-nfo/bin/activate
     python -m pip install "setuptools<82"
     deactivate
+else
+    echo "ytdl-nfo already installed"
 fi
 
 function pause(){
