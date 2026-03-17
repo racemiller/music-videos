@@ -103,8 +103,8 @@ else
     ## Fixes yt-dlp special character handling
     mv -v "$json" "$full_title-video.info.json"
     mv -v "$base.mkv" "$full_title-video.mkv"
-    [[ -f "$dir/$base-video.webp" ]] && mv -v "$dir/$base-video.webp" "$dir/$full_title-video.webp"
-    [[ -f "$dir/$base-video.jpg" ]] && mv -v "$dir/$base-video.jpg" "$dir/$full_title-video.jpg"
+    [[ -f "$base.webp" ]] && mv -v "$base.webp" "$dir/$full_title-video.webp"
+    [[ -f "$base.jpg" ]] && mv -v "$base.jpg" "$dir/$full_title-video.jpg"
 fi
 if [ ! -n "$artist" ]; then
     echo "Video artist not found. Exiting"
